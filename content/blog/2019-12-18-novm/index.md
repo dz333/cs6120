@@ -315,3 +315,43 @@ on the stack, the cost of checking stack size and occasionally allocating new st
 frame pages would be negligible. All in all, if we could actually address physical
 memory, we very well might see improvements in performance while also
 simplifying much of the underlying hardware and operating system.
+
+# References
+
+Do-It-Yourself VM Translation: https://dl.acm.org/doi/10.1145/3079856.3080209
+
+Section 2 - Has Overheads for VM Translation on X86 (not just TLB misses).
+(2%-78% but usually ~10% on normal systems. Consistently higher in virtualized workloads). Gives evidence that, in particular in the virtualization case, translation has significant overhead.
+
+------------------
+
+List of references about work that tries to support Super/Huge Pages.
+Super/huge pages are all about avoiding the overheads of TLB misses in workloads that
+allocate large amounts of memory.
+
+- https://doi.org/10.1145/3343737.3343745
+- https://doi.org/10.1145/3310133
+- https://www.usenix.org/system/files/conference/osdi16/osdi16-kwon.pdf
+- https://dl.acm.org/doi/10.1145/3297858.3304064
+
+------------------------------------
+
+Efficient Virtual Memory for Big Memory Servers: https://dl.acm.org/doi/10.1145/2485922.2485943
+
+Motivates and suggests the "Direct Segment" Hardware Support which gives processes the
+ability to map a contiguous physical memory space within part of their virtual address space.
+
+Claims certain workloads spend 10% of execution cycles on TLB Misses and would benefit from
+physical addressing.
+
+----------------------------
+
+
+Devirtualizing Memory in Heterogeneous Systems: https://dl.acm.org/doi/10.1145/3173162.3173194
+
+Focused on the acceleartor use case. Benefit of VM for accelerators is a single unified protection
+model. Downside, overheads of VM are even higher for accelerators.
+Main idea: try to map addresses so that VA=PA and then use speculation to presume they're the same.
+
+
+--------------
